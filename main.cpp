@@ -14,6 +14,8 @@ using namespace std;
 #define U2 uint16_t
 #define U4 uint32_t
 
+#define UBX_RXM_SFRBX (preamble1 == 181) && (preamble2 == 98) && (messageClass == 2) && (messageId == 19)
+
 
 void binaryRead(ifstream &binaryFile);
 
@@ -35,19 +37,24 @@ void showResults(bool show);
 int main() {
 
 
-    showResults(true);
 
-    const string filePath = R"(C:\Users\PC_901_ADMIN\Desktop\Projects\GPSL1Band\COM6_210713_094724.ubx)";
+    const string filePath = R"(C:\Users\PC_901_ADMIN\Desktop\Projects\GPSL1Band\data\COM6_210713_094724.ubx)";
     wstring ubxData = readUBloxFile(filePath);
 
     int index = 0;
-    U1 preamble1, preamble2, messageClass, messageId;
-    U2 length;
-    setUbxHeader(ubxData, index, preamble1, preamble2, messageClass, messageId, length);
+    long long int size = ubxData.length();
 
-    // set payload header
-    setPayload(ubxData, index, length);
+    while (ubxData.length() - index) {
+        showResults(false);
+        U1 preamble1, preamble2, messageClass, messageId;
+        U2 length;
+        setUbxHeader(ubxData, index, preamble1, preamble2, messageClass, messageId, length);
 
+        // set payload header
+        setPayload(ubxData, index, length);
+    }
+
+    cout << index << endl;
     return 0;
 }
 
@@ -127,6 +134,10 @@ void setUbxHeader(const wstring &fileContent, int &index, U1 &preamble1, U1 &pre
     messageClass = (int) messageClassBits.to_ulong();
     messageId = (int) messageIdBits.to_ulong();
     length = (int) lengthBits.to_ulong();
+
+    // UBX_RXM_SFRBX message conditions
+    if (UBX_RXM_SFRBX)
+        showResults(true);
 
     cout << "****************************************************" << endl;
     cout << "************** |----- HEADER -----| ****************" << endl;
