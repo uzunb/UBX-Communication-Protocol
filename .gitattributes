@@ -1,0 +1,9 @@
+*.gitignore filter=lfs diff=lfs merge=lfs -text
+*.name filter=lfs diff=lfs merge=lfs -text
+*.iml filter=lfs diff=lfs merge=lfs -text
+*.xml filter=lfs diff=lfs merge=lfs -text
+*.txt filter=lfs diff=lfs merge=lfs -text
+*.md filter=lfs diff=lfs merge=lfs -text
+*.cbp filter=lfs diff=lfs merge=lfs -text
+*.ubx filter=lfs diff=lfs merge=lfs -text
+*.cpp filter=lfs diff=lfs merge=lfs -text
