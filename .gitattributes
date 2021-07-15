@@ -7,3 +7,4 @@
 *.cbp filter=lfs diff=lfs merge=lfs -text
 *.ubx filter=lfs diff=lfs merge=lfs -text
 *.cpp filter=lfs diff=lfs merge=lfs -text
+*.rar filter=lfs diff=lfs merge=lfs -text
